@@ -1,3 +1,5 @@
+package jasper;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -17,32 +19,33 @@ public class MainWindow {
     @FXML
     private Button sendButton;
 
-    private Duke duke;
+    private Jasper jasper;
 
     private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private final Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private final Image jasperImage = new Image(this.getClass().getResourceAsStream("/images/DaJasper.png"));
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance */
-    public void setDuke(Duke d) {
-        duke = d;
+    /** Injects the jasper.Jasper instance */
+    public void setJasper(Jasper j) {
+        jasper = j;
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
+     * Creates two dialog boxes, one echoing user input and the other containing jasper.Jasper's reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = duke.getResponse(input);
+        String response = jasper.getResponse(input);
+        String commandType = jasper.getCommandType();
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getJasperDialog(response, jasperImage, commandType)
         );
         userInput.clear();
     }

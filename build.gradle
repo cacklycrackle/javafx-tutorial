@@ -14,7 +14,7 @@ repositories {
 }
 
 application {
-    mainClass.set("Launcher")
+    mainClass.set("jasper.Launcher")
 }
 
 java {

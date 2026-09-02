@@ -1,3 +1,5 @@
+package jasper;
+
 import java.io.IOException;
 
 import javafx.collections.FXCollections;
@@ -20,7 +22,7 @@ public class DialogBox extends HBox {
     private DialogBox(String text, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
-            fxmlLoader.setController(this); // alternative to fx:controller="DialogBox" in root node of XML file
+            fxmlLoader.setController(this); // alternative to fx:controller="jasper.DialogBox" in root node of XML file
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
         } catch (IOException e) {
@@ -35,9 +37,10 @@ public class DialogBox extends HBox {
         return new DialogBox(s, i);
     }
 
-    public static DialogBox getDukeDialog(String s, Image i) {
+    public static DialogBox getJasperDialog(String s, Image i, String commandType) {
         DialogBox db = new DialogBox(s, i);
         db.flip();
+        db.changeDialogStyle(commandType);
         return db;
     }
 
@@ -50,5 +53,32 @@ public class DialogBox extends HBox {
         FXCollections.reverse(tmp);
         getChildren().setAll(tmp);
         dialog.getStyleClass().add("reply-label");
+    }
+
+    private void changeDialogStyle(String commandType) {
+        switch(commandType) {
+            case "TodoCommand":
+            case "DeadlineCommand":
+            case "EventCommand":
+                dialog.getStyleClass().add("add-label");
+                break;
+            case "MarkCommand":
+                dialog.getStyleClass().add("marked-label");
+                break;
+            case "UnmarkCommand":
+                dialog.getStyleClass().add("unmarked-label");
+                break;
+            case "DeleteCommand":
+                dialog.getStyleClass().add("delete-label");
+                break;
+            case "Error":
+                dialog.getStyleClass().add("error-label");
+                break;
+            case "ByeCommand":
+            case "FindCommand":
+            case "ListCommand":
+            default:
+                // Do nothing
+        }
     }
 }
